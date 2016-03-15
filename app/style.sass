@@ -1,0 +1,110 @@
+$dark-blue: #2D3440
+$green: rgb(90, 176, 100)
+$red: rgb(175, 75, 78)
+$blue: rgb(53, 60, 73)
+$light-blue: #3B4351
+$light-blue1: #61666F
+$grey-blue: #555F72
+
+body
+    font-family: "Open Sans", sans-serif
+    margin: 0px
+    background: $dark-blue
+
+*
+    transition: all 0.1s ease
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+
+#root
+
+.reddit
+    height: 60px
+    display: block
+    margin: 10px auto
+
+.nav
+    display: flex
+    flex-direction: row
+    width: 100%
+
+.navigation
+    background: $light-blue
+    flex: 1
+
+.navigation>ul
+    margin: 0px
+    padding: 15px
+    list-style: none
+    color: white
+
+.navigation>ul>li
+    padding: 10px 15px
+    font-size: 12px
+    border-radius: 5px
+
+.score
+    font-size: 12px
+    text-align: center
+    padding: 0px 20px
+    color: $grey-blue
+    font-weight: 600
+    margin-top: 0px;
+    margin-bottom: 5px;
+
+.nav>table>tbody>tr:hover
+    background-color: $dark-blue
+
+.nav>table>tbody>tr:hover>td>p
+    color: white
+
+.like
+    fill: $light-blue1
+
+.like:hover
+    fill: $green
+    cursor: pointer
+
+.dislike
+    fill: $light-blue1
+
+.dislike:hover
+    fill: $red
+    cursor: pointer
+
+.center
+    padding: 20px 0px
+    text-align: center
+
+.title
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 600px;
+    white-space: nowrap;
+
+.author
+    font-size: 10px;
+    margin: 20px 0px;
+    margin-top: 0px;
+
+.title>a
+    font-size: 18px
+    font-weight: 500
+    color: white
+    text-decoration: none
+
+.navigation>ul>li:hover, .navigation>ul>li.selected
+    background-color: $dark-blue
+    cursor: pointer
+
+.nav>table>tbody
+    display: table;
+    width: 100%
+
+.nav>table
+    width: 100%
+    background: $blue
+    border-spacing: 0px
+    flex: 2
+    display: flex
+    color: white
