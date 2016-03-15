@@ -30,7 +30,15 @@ body
 
 .navigation
     background: $light-blue
-    flex: 1
+
+.flex
+    flex: 3
+
+.no-data
+    text-align: center
+    font-size: 2em
+    color: $light-blue1
+    padding-top: 100px
 
 .navigation>ul
     margin: 0px
@@ -38,10 +46,23 @@ body
     list-style: none
     color: white
 
+.sub-color
+    height: 10px
+    width: 10px
+    display: inline-block
+    background-color: $light-blue1
+    margin-right: 5px
+    border-radius: 2.5px
+
 .navigation>ul>li
     padding: 10px 15px
     font-size: 12px
     border-radius: 5px
+    margin: 5px 0px
+
+.full-pic
+    flex: 1
+    background: red
 
 .score
     font-size: 12px
@@ -52,10 +73,13 @@ body
     margin-top: 0px;
     margin-bottom: 5px;
 
-.nav>table>tbody>tr:hover
+.nav>.flex>table>tbody>tr>td
+    border-bottom: 1px solid $dark-blue
+
+.nav>.flex>table>tbody>tr:hover
     background-color: $dark-blue
 
-.nav>table>tbody>tr:hover>td>p
+.nav>.flex>table>tbody>tr:hover>td>p
     color: white
 
 .like
@@ -97,11 +121,11 @@ body
     background-color: $dark-blue
     cursor: pointer
 
-.nav>table>tbody
+.nav>.flex>table>tbody
     display: table;
     width: 100%
 
-.nav>table
+.nav>.flex>table
     width: 100%
     background: $blue
     border-spacing: 0px

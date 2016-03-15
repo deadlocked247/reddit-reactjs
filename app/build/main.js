@@ -1,4 +1,5 @@
-/* babel --presets react app/main.js --watch --out-dir app/build */
+
+/* babel --presets react main.js --watch --out-dir app/build */
 var NavigationItem = React.createClass({
     displayName: "NavigationItem",
 
@@ -6,9 +7,14 @@ var NavigationItem = React.createClass({
         this.props.itemSelected(this.props.item);
     },
     render: function () {
+        var style = {
+            backgroundColor: this.props.item.data.key_color
+        };
+
         return React.createElement(
             "li",
             { onClick: this.onClick, className: this.props.selected ? "selected" : "" },
+            React.createElement("div", { className: "sub-color", style: style }),
             this.props.item.data.display_name
         );
     }
@@ -44,11 +50,19 @@ var Navigation = React.createClass({
 var StoryList = React.createClass({
     displayName: "StoryList",
 
+    onClick: function (item) {
+        FullPic.set(item);
+    },
     render: function () {
+        var _this = this;
         var storyNodes = this.props.items.map(function (item) {
+            function onClick() {
+                _this.onClick(item);
+            }
+            item.selected = false;
             return React.createElement(
                 "tr",
-                { key: item.data.url },
+                { onClick: onClick, key: item.data.url },
                 React.createElement(
                     "td",
                     { className: "center" },
@@ -96,7 +110,7 @@ var StoryList = React.createClass({
 
         return React.createElement(
             "table",
-            null,
+            { id: "table" },
             React.createElement(
                 "tbody",
                 null,
@@ -116,8 +130,10 @@ var App = React.createClass({
         script.src = "https://www.reddit.com/reddits.json?jsonp=" + cbname;
 
         window[cbname] = function (jsonData) {
+            _this.setSelectedItem(jsonData.data.children[0]);
             _this.setState({
-                navigationItems: jsonData.data.children
+                navigationItems: jsonData.data.children,
+                activeNavigationUrl: jsonData.data.children[0].data.url
             });
             delete window[cbname];
         };
@@ -143,9 +159,17 @@ var App = React.createClass({
                 React.createElement(Navigation, { activeUrl: this.state.activeNavigationUrl,
                     items: this.state.navigationItems,
                     itemSelected: this.setSelectedItem }),
-                React.createElement(StoryList, { items: this.state.storyItems })
+                React.createElement(
+                    "div",
+                    { className: "flex" },
+                    !this.state.activeNavigationUrl ? React.createElement("div", { className: "loader" }) : null,
+                    React.createElement(StoryList, { items: this.state.storyItems })
+                )
             )
         );
+    },
+    reset: function () {
+        this.state.activeNavigationUrl = undefined;
     },
     setSelectedItem: function (item) {
         var _this = this;
@@ -161,10 +185,10 @@ var App = React.createClass({
         document.head.appendChild(script);
 
         this.setState({
-            activeNavigationUrl: item.data.url,
-            title: item.data.display_name
+            title: item.data.display_name,
+            activeNavigationUrl: item.data.url
         });
     }
 });
 
-React.render(React.createElement(App, null), document.getElementById("root"));
+ReactDOM.render(React.createElement(App, null), document.getElementById("root"));
