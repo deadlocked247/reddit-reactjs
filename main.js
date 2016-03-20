@@ -57,6 +57,26 @@ var StoryList = React.createClass({
                 _this.onClick(item);
             }
             item.selected = false;
+            var lg = item.data.url.length;
+            if (item.data.url.substring(lg - 4, lg ) != '.png' &&
+            item.data.url.substring(lg - 4, lg ) != '.jpg' &&
+            item.data.url.substring(lg - 5, lg ) != '.jpeg' &&
+            item.data.url.substring(lg - 4, lg ) != '.gif' &&
+            item.data.url.substring(lg - 5, lg ) != '.gifv') {
+                item.data.url += ".png";
+            }
+
+            if (item.data.url.substring(lg - 5, lg) == '.gifv') {
+                item.data.url = item.data.url.substring(0, lg - 1);
+            }
+
+            var style =
+            {
+                "background-image" : "url(" + item.data.url + ")"
+            };
+
+            lg = item.data.url.length;
+
             return (
                 <tr onClick={onClick} key={item.data.url}>
                     <td className="center">
@@ -68,7 +88,20 @@ var StoryList = React.createClass({
                            <path d="M19,15H23V3H19M15,3H6C5.17,3 4.46,3.5 4.16,4.22L1.14,11.27C1.05,11.5 1,11.74 1,12V13.91L1,14A2,2 0 0,0 3,16H9.31L8.36,20.57C8.34,20.67 8.33,20.77 8.33,20.88C8.33,21.3 8.5,21.67 8.77,21.94L9.83,23L16.41,16.41C16.78,16.05 17,15.55 17,15V5C17,3.89 16.1,3 15,3Z" />
                         </svg>
                     </td>
+
                     <td>
+                    { (item.data.url.substring(0, 12) == "http://imgur" ||
+                    item.data.url.substring(0, 13) == "https://imgur" ||
+                    item.data.url.substring(0, 14) == "http://i.imgur" ||
+                    item.data.url.substring(0, 15) == "https://i.imgur" ||
+                    item.data.url.substring(0, 15) == "https://m.imgur" ||
+                    item.data.url.substring(0, 14) == "http://m.imgur") &&
+                    item.data.url.substring(lg - 4, lg) != '.gif'
+                     ? <div style={style} className="thumbnail"></div> : null}
+
+                     {item.data.url.substring(lg - 4, lg) == '.gif'
+                      ? <div className="thumbnail-gif"><img src={item.data.url}/></div> : null}
+                    <div className="inline">
                         <p className="title">
                             <a href={item.data.url}>
                                 {item.data.title}
@@ -77,6 +110,7 @@ var StoryList = React.createClass({
                         <p className="author">
                             Posted by <b>{item.data.author}</b>
                         </p>
+                    </div>
                     </td>
 
                 </tr>

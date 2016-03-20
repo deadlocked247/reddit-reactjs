@@ -60,6 +60,21 @@ var StoryList = React.createClass({
                 _this.onClick(item);
             }
             item.selected = false;
+            var lg = item.data.url.length;
+            if (item.data.url.substring(lg - 4, lg) != '.png' && item.data.url.substring(lg - 4, lg) != '.jpg' && item.data.url.substring(lg - 5, lg) != '.jpeg' && item.data.url.substring(lg - 4, lg) != '.gif' && item.data.url.substring(lg - 5, lg) != '.gifv') {
+                item.data.url += ".png";
+            }
+
+            if (item.data.url.substring(lg - 5, lg) == '.gifv') {
+                item.data.url = item.data.url.substring(0, lg - 1);
+            }
+
+            var style = {
+                "background-image": "url(" + item.data.url + ")"
+            };
+
+            lg = item.data.url.length;
+
             return React.createElement(
                 "tr",
                 { onClick: onClick, key: item.data.url },
@@ -85,23 +100,33 @@ var StoryList = React.createClass({
                 React.createElement(
                     "td",
                     null,
+                    (item.data.url.substring(0, 12) == "http://imgur" || item.data.url.substring(0, 13) == "https://imgur" || item.data.url.substring(0, 14) == "http://i.imgur" || item.data.url.substring(0, 15) == "https://i.imgur" || item.data.url.substring(0, 15) == "https://m.imgur" || item.data.url.substring(0, 14) == "http://m.imgur") && item.data.url.substring(lg - 4, lg) != '.gif' ? React.createElement("div", { style: style, className: "thumbnail" }) : null,
+                    item.data.url.substring(lg - 4, lg) == '.gif' ? React.createElement(
+                        "div",
+                        { className: "thumbnail-gif" },
+                        React.createElement("img", { src: item.data.url })
+                    ) : null,
                     React.createElement(
-                        "p",
-                        { className: "title" },
+                        "div",
+                        { className: "inline" },
                         React.createElement(
-                            "a",
-                            { href: item.data.url },
-                            item.data.title
-                        )
-                    ),
-                    React.createElement(
-                        "p",
-                        { className: "author" },
-                        "Posted by ",
+                            "p",
+                            { className: "title" },
+                            React.createElement(
+                                "a",
+                                { href: item.data.url },
+                                item.data.title
+                            )
+                        ),
                         React.createElement(
-                            "b",
-                            null,
-                            item.data.author
+                            "p",
+                            { className: "author" },
+                            "Posted by ",
+                            React.createElement(
+                                "b",
+                                null,
+                                item.data.author
+                            )
                         )
                     )
                 )
